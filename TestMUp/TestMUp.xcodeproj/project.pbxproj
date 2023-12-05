@@ -90,13 +90,12 @@
 			isa = PBXGroup;
 			children = (
 				D03D973E29FA8E73006A4CEC /* App */,
+				D016CC5129FBC8B10039E8A2 /* Managers */,
 				D03D974129FA8E91006A4CEC /* Model */,
 				D03D974029FA8E8B006A4CEC /* View */,
 				D03D973F29FA8E7E006A4CEC /* Controller */,
-				D016CC5129FBC8B10039E8A2 /* Managers */,
-				D03D974229FA8EA9006A4CEC /* Resources */,
 				D04BA4ED29FABE28000D8154 /* Extension */,
-				D007DA0029FA857600046A23 /* Info.plist */,
+				D03D974229FA8EA9006A4CEC /* Resources */,
 			);
 			path = TestMUp;
 			sourceTree = "<group>";
@@ -154,6 +153,7 @@
 				D007D9FB29FA857600046A23 /* Assets.xcassets */,
 				D0F5923129FD1FA30085F77F /* Localizable.strings */,
 				D00E4EE32B1FA65E006029A3 /* Constants.strings */,
+				D007DA0029FA857600046A23 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -433,7 +433,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7Y7QR66JR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TestMUp/Info.plist;
+				INFOPLIST_FILE = TestMUp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -464,7 +464,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B7Y7QR66JR;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TestMUp/Info.plist;
+				INFOPLIST_FILE = TestMUp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
