@@ -1,21 +1,15 @@
-/* 
-  Localizable.strings
-  TestMUp
-
-  Created by Нахид Гаджалиев on 29.04.2023.
-  
-*/
-
 "Log in with VK" = "Войти через VK";
 "Error" = "Ошибка";
 "Some error during authorization" = "Ошибка в процессе авторизации";
 "Failed loading images" = "Не удалось загрузить изображение";
 "Reload" = "Обновить";
 "Logout" = "Выйти";
-"Logout?" = "Выйти?";
 "Yes" = "Да";
 "No" = "Нет";
 "Saved" = "Сохранено";
 "Image not found" = "Изображение не найдено";
 "Image successfully saved to gallery" = "Изображение успешно сохранено в галерею";
 "Some error during execution" = "Ошибка в процессе выполнения";
+"Gallery" = "Галерея";
+"Ok" = "OK";
+"Photo Gallery" = "Фотогалерея";

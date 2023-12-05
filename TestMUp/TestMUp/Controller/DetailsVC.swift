@@ -9,14 +9,15 @@ import UIKit
 import SnapKit
 
 class DetailsVC: UIViewController {
+    private var image: ImageModel?
+    private var otherImages: [ImageModel] = [ImageModel]()
     
-    // MARK: - PRIVATE PROPERTIES
     private let imageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.isUserInteractionEnabled = true
-
+        
         return image
     }()
     
@@ -28,17 +29,16 @@ class DetailsVC: UIViewController {
         layout.minimumInteritemSpacing = 2
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(GalleryCollectionViewCell.self,
-                                forCellWithReuseIdentifier: GalleryCollectionViewCell.identifier) // создать кастомную ячейку
+        collectionView.register(
+            GalleryCollectionViewCell.self,
+            forCellWithReuseIdentifier: R.string.constants.galleryCollectionViewCellId()
+        )
         
         return collectionView
     }()
     
-    private var image: ImageModel? // здесь будет изображение
-    private var otherImages: [ImageModel] = [ImageModel]() // остальные изображения
     private lazy var size = view.frame.width
     
-    // MARK: - Initialization
     init(generalImage: ImageModel, otherImages: [ImageModel]) {
         super.init(nibName: nil, bundle: nil)
         self.image = generalImage
@@ -46,7 +46,8 @@ class DetailsVC: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        assertionFailure()
     }
     
     override func viewDidLoad() {
@@ -57,31 +58,29 @@ class DetailsVC: UIViewController {
     }
 }
 
-
-
-
-// MARK: - ADDING PRIVATE METHODS
-extension DetailsVC {
-    
-    private func getDate() -> String {
+// MARK: - Methods
+private extension DetailsVC {
+    func getDate() -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(image?.date ?? 0))
         return DateFormatter.titleDateFormatter.string(from: date)
     }
     
-    private func viewUpdate() {
+    func viewUpdate() {
         view.backgroundColor = .systemBackground
         view.addSubview(imageView)
         view.addSubview(collectionView)
         navBarConfiguration()
         setupConstraints()
-        imageView.kf.setImage(with: URL(string: image?.urlString ?? ""), placeholder: UIImage(systemName: "photo"))
+        imageView.kf.setImage(with: URL(string: image?.urlString ?? String.empty), placeholder: UIImage(systemName: "photo"))
     }
     
-    private func setupConstraints() {
-        imageView.frame = CGRect(x: 0,
-                                 y: 0,
-                                 width: size,
-                                 height: size)
+    func setupConstraints() {
+        imageView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: size,
+            height: size
+        )
         imageView.center = view.center
         
         collectionView.snp.makeConstraints { make in
@@ -92,29 +91,27 @@ extension DetailsVC {
         }
     }
     
-    private func navBarConfiguration() {
+    func navBarConfiguration() {
         title = getDate()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action,
-                                                            target: self,
-                                                            action: #selector(shareTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(shareTapped)
+        )
         navigationController?.navigationItem.hidesBackButton = true //
-        navigationController?.navigationBar.tintColor = Constants.Colors.customBlack //сделать кастомным
+        navigationController?.navigationBar.tintColor = R.color.customBlack()
     }
     
-    private func pinchToZoom() {
+    func pinchToZoom() {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(didPinch))
         imageView.addGestureRecognizer(pinchGesture)
     }
     
 }
 
-
-
-
-// MARK: - ADDING ACTIONS
-extension DetailsVC {
-    
-    @objc private func didPinch(_ gesture: UIPinchGestureRecognizer) {
+// MARK: - Actions
+private extension DetailsVC {
+    @objc func didPinch(_ gesture: UIPinchGestureRecognizer) {
         if gesture.state == .changed {
             let scale = gesture.scale
             imageView.frame = CGRect(x: 0, y: 0, width: size  * scale, height: size * scale)
@@ -126,12 +123,14 @@ extension DetailsVC {
         }
     }
     
-    @objc private func shareTapped() {
+    @objc func shareTapped() {
         guard let image = imageView.image else {
-            let alert = UIAlertController(title: "Error".localized(),
-                                          message: "Image not found".localized(),
-                                          preferredStyle: .alert)
-            let actionOK = UIAlertAction(title: "OK", style: .default)
+            let alert = UIAlertController(
+                title: R.string.localizable.error(),
+                message: R.string.localizable.imageNotFound(),
+                preferredStyle: .alert
+            )
+            let actionOK = UIAlertAction(title: R.string.localizable.ok(), style: .default)
             alert.addAction(actionOK)
             self.present(alert, animated: true)
             return
@@ -142,19 +141,23 @@ extension DetailsVC {
         shareController.completionWithItemsHandler = { _, bool, _, error in
             
             if bool {
-                let alert = UIAlertController(title: "Saved".localized(),
-                                              message: "Image successfully saved to gallery".localized(),
-                                              preferredStyle: .alert)
-                let actionOK = UIAlertAction(title: "OK", style: .default)
+                let alert = UIAlertController(
+                    title: R.string.localizable.saved(),
+                    message: R.string.localizable.imageSuccessfullySavedToGallery(),
+                    preferredStyle: .alert
+                )
+                let actionOK = UIAlertAction(title: R.string.localizable.ok(), style: .default)
                 alert.addAction(actionOK)
                 self.present(alert, animated: true)
             }
             
             if error != nil {
-                let alert = UIAlertController(title: "Error".localized(),
-                                              message: "Some error during execution".localized(),
-                                              preferredStyle: .alert)
-                let actionOK = UIAlertAction(title: "OK", style: .default)
+                let alert = UIAlertController(
+                    title: R.string.localizable.error(),
+                    message: R.string.localizable.someErrorDuringExecution(),
+                    preferredStyle: .alert
+                )
+                let actionOK = UIAlertAction(title: R.string.localizable.ok(), style: .default)
                 alert.addAction(actionOK)
                 self.present(alert, animated: true)
             }
@@ -162,26 +165,23 @@ extension DetailsVC {
         
         present(shareController, animated: true)
     }
-    
 }
 
-
-
-
+// MARK: - UICollectionViewDataSource
 extension DetailsVC: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         otherImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier,
-                                                            for: indexPath) as? GalleryCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: R.string.constants.galleryCollectionViewCellId(),
+            for: indexPath
+        ) as? GalleryCollectionViewCell else {
             return UICollectionViewCell()
         }
         let url = otherImages[indexPath.row].urlString
         cell.configure(with: url)
         return cell
     }
-    
 }

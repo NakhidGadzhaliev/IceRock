@@ -1,0 +1,10 @@
+"request-base-url" = "https://api.vk.com/method/";
+"request-owner-id" = "-128666765";
+"request-album-id" = "266310117";
+"request-token-title" = "&access_token=";
+"requestAPI-version" = "&v=5.131";
+"app-id" = "51628853";
+"key-access-token" = "access_token";
+"key-expiration-date" = "expirationDate";
+"gallery-collection-view-cell-id" = "GalleryCollectionViewCell";
+"expires-in" = "expires_in";

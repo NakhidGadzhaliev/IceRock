@@ -9,15 +9,8 @@ import UIKit
 import SnapKit
 
 final class GalleryVC: UIViewController {
-    private enum Constants {
-        static let failedLoadingImages = "Failed loading images"
-        static let reload = "Reload"
-    }
-    
-    // MARK: Данные с сервера
     private var imagesArray: [ImageModel] = [ImageModel]() // данные с сервера
     
-    // MARK: - Properties
     private lazy var galleryCollectionView = {
         let layout = UICollectionViewFlowLayout()
         let size = (view.frame.width / 2) - 1
@@ -28,7 +21,7 @@ final class GalleryVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(
             GalleryCollectionViewCell.self,
-            forCellWithReuseIdentifier: GalleryCollectionViewCell.identifier
+            forCellWithReuseIdentifier: R.string.constants.galleryCollectionViewCellId()
         )
         
         return collectionView
@@ -67,13 +60,13 @@ private extension GalleryVC {
     
     func showErrorAlert() {
         let alert = UIAlertController(
-            title: Constants.failedLoadingImages.localized(),
+            title: R.string.localizable.failedLoadingImages(),
             message: nil,
             preferredStyle: .alert
         )
         
         alert.addAction(UIAlertAction(
-            title: Constants.reload.localized(),
+            title: R.string.localizable.reload(),
             style: .default,
             handler: { [weak self] (_) in
                 self?.fetchData()
@@ -89,14 +82,14 @@ private extension GalleryVC {
     }
     
     func navBarConfiguration() {
-        title = "Gallery"
+        title = R.string.localizable.gallery()
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Logout".localized(),
+            title: R.string.localizable.logout(),
             style: .done,
             target: self,
             action: #selector(exitButtonTapped)
         )
-        navigationController?.navigationBar.tintColor = Constants.Colors.customBlack
+        navigationController?.navigationBar.tintColor = R.color.customBlack()
     }
     
     func setupConstraints() {
@@ -109,9 +102,9 @@ private extension GalleryVC {
 // MARK: - Actions
 private extension GalleryVC {
     @objc func exitButtonTapped() {
-        let alert = UIAlertController(title: "Logout?".localized(), message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "No".localized(), style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes".localized(), style: .default, handler: { [weak self] _ in
+        let alert = UIAlertController(title: R.string.localizable.logout() + String.question, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: R.string.localizable.no(), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: R.string.localizable.yes(), style: .default, handler: { [weak self] _ in
             
             AuthManager.shared.logOut { success in
                 if success {
@@ -150,7 +143,7 @@ extension GalleryVC: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GalleryCollectionViewCell.identifier,
+            withReuseIdentifier: R.string.constants.galleryCollectionViewCellId(),
             for: indexPath
         ) as? GalleryCollectionViewCell else {
             return UICollectionViewCell()

@@ -10,9 +10,6 @@ import Kingfisher
 import SnapKit
 
 class GalleryCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = "GalleryCollectionViewCell"
-    
     private let imageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -27,21 +24,16 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        assertionFailure()
     }
-    
 }
 
-
-
-
-// MARK: - ADDING PRIVATE METHODS
+// MARK: - Methods
 extension GalleryCollectionViewCell {
-    
     func configure(with imageUrl: String) {
         let url = URL(string: imageUrl)
         let placeholderImage = UIImage(systemName: "photo")?.withRenderingMode(.alwaysOriginal)
-        
         imageView.kf.setImage(with: url, placeholder: placeholderImage)
     }
     
@@ -56,5 +48,4 @@ extension GalleryCollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
-    
 }

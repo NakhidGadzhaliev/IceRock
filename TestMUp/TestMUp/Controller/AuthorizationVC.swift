@@ -10,7 +10,6 @@ import WebKit
 import SnapKit
 
 final class AuthorizationVC: UIViewController {
-    
     // MARK: - PROPERTIES
     var authorizationCompletion: ((Bool) -> Void)?
     
@@ -29,13 +28,9 @@ final class AuthorizationVC: UIViewController {
     }
 }
 
-
-
-
-// MARK: - ADDING PRIVATE METHODS
-extension AuthorizationVC {
-    
-    private func viewUpdate() {
+// MARK: - Methods
+private extension AuthorizationVC {
+    func viewUpdate() {
         view.backgroundColor = .systemBackground
         view.addSubview(webView)
         view.addSubview(connectErrorView)
@@ -43,11 +38,11 @@ extension AuthorizationVC {
         webViewUpdate()
     }
     
-    private func webViewUpdate() {
+    func webViewUpdate() {
         webView.navigationDelegate = self
     }
     
-    private func setupConstraints() {
+    func setupConstraints() {
         connectErrorView.snp.makeConstraints { make in
             make.height.width.equalToSuperview().dividedBy(2)
             make.center.equalToSuperview()
@@ -58,20 +53,14 @@ extension AuthorizationVC {
         }
     }
     
-    private func fetchData() {
+    func fetchData() {
         guard let url = AuthManager.shared.loginURL else { return }
         webView.load(URLRequest(url: url))
     }
-    
 }
-
-
-
-
 
 // MARK: - WKNavigationDelegate
 extension AuthorizationVC: WKNavigationDelegate {
-    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         webView.isHidden = true
         connectErrorView.isHidden = false
@@ -94,7 +83,5 @@ extension AuthorizationVC: WKNavigationDelegate {
                 self.authorizationCompletion?(false)
             }
         }
-        
     }
-    
 }

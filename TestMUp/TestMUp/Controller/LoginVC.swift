@@ -9,24 +9,22 @@ import UIKit
 import SnapKit
 
 final class LoginVC: UIViewController {
-    
-    // MARK: - PRIVATE PROPERTIES
-    
+    // MARK: - Properties
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Mobile Up \nGallery"
+        label.text = R.string.localizable.photoGallery()
         label.font = .systemFont(ofSize: 44, weight: .semibold)
         label.textColor = .label
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         
         return label
     }()
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Log in with VK".localized(), for: .normal)
-        button.setTitleColor(Constants.Colors.customWhite, for: .normal)
-        button.backgroundColor = Constants.Colors.customBlack
+        button.setTitle(R.string.localizable.logInWithVK(), for: .normal)
+        button.setTitleColor(R.color.customWhite(), for: .normal)
+        button.backgroundColor = R.color.customBlack()
         button.layer.cornerRadius = 12
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         
@@ -37,24 +35,18 @@ final class LoginVC: UIViewController {
         super.viewDidLoad()
         viewUpdate()
     }
-    
 }
 
-
-
-
-// MARK: - ADDING METHODS
-extension LoginVC {
-    
-    private func viewUpdate() {
+// MARK: - Methods
+private extension LoginVC {
+    func viewUpdate() {
         view.backgroundColor = .systemBackground
         view.addSubview(titleLabel)
         view.addSubview(loginButton)
         setupConstraints()
     }
     
-    private func setupConstraints() {
-        
+    func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(view.frame.height * 0.2)
             make.trailing.equalToSuperview().inset(24)
@@ -66,26 +58,21 @@ extension LoginVC {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(8)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        
     }
     
-    private func authErrorAlert() {
-        let title = "Error".localized()
-        let message = "Some error during authorization".localized()
+    func authErrorAlert() {
+        let title = R.string.localizable.error()
+        let message = R.string.localizable.someErrorDuringAuthorization()
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
+        alert.addAction(UIAlertAction(title: R.string.localizable.ok(), style: .default, handler: nil))
+
         present(alert, animated: true)
     }
-    
 }
 
-
-
-
-// MARK: - ADDING ACTIONS
-extension LoginVC {
-    @objc private func loginButtonTapped() {
+// MARK: - Actions
+private extension LoginVC {
+    @objc func loginButtonTapped() {
         let authVC = AuthorizationVC()
         
         authVC.authorizationCompletion = { [weak self] success in
